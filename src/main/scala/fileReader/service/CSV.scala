@@ -1,24 +1,20 @@
 package fileReader.service
 
-import java.io.File
 import java.nio.file.{Files, Path}
-import scala.annotation.tailrec
-import scala.io.Source
 import scala.jdk.CollectionConverters.IteratorHasAsScala
+import scala.io.Source
 
-
-final case class ReadResult[A](lines: Iterable[A], nbInvalidLine: Int)
 
 object CSV {
 
-  //fonction non recursive
-  def read[A](fileName: String, parseLine: Array[String] => Option[A], regex: String = ","): ReadResult[A] = {
+  final case class ReadResult[A](lines : List[A] , nbInvalidLine : Int)
 
-    val SourceCsv = Source.fromFile(fileName)
-    val linesWithoutHeader: Iterator[String] = SourceCsv.getLines().drop(1)
-    val parsedLine: Iterable[Option[A]] = linesWithoutHeader.map { x => parseLine(x.split(regex).map(_.trim)) }.to(Iterable)
-    val invalidLine = parsedLine.count { x => x.isEmpty }
-
-    ReadResult(parsedLine.flatten, invalidLine)
+  def read[A](fileName : String , parseLine : Array[String] => Option[A] , regex : String = ",") = {
+    val file = Source.fromFile(fileName)
+    val scalaFileContents : Iterator[String] = file.getLines().drop(1)
+    val lineParsed = scalaFileContents.map(data => parseLine(data.split(regex).map(_.trim))).toList
+    //val invalidLine : Int = lineParsed.count(x => x.isEmpty)
+    ReadResult(lineParsed.flatten , 0)
   }
+
 }

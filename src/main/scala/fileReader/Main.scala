@@ -1,43 +1,23 @@
 package fileReader
 
-import fileReader.model.{AirportTest, CountryTest, RunwayTest}
-import fileReader.service.{CSV, Query, Reports}
+import fileReader.model.{Airport, Country, Runway}
+import fileReader.service._
+import storingQuering.{Storage, Storing}
 
-import scala.sys.exit
+import scala.util.Try
 
 object Main {
 
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]) = {
+    val airport = CSV.read("src/main/data/airports.csv", Airport.fromCsvLine)
+    val country = CSV.read("src/main/data/countries.csv", Country.fromCsvLine)
+    val runway = CSV.read("src/main/data/runways.csv", Runway.fromCsvLine)
+    val test = runway
+    //test.lines.foreach(println)
 
-    val airports = CSV.read("src/main/scala/fileReader/CSV/airports.csv", AirportTest.fromCsvLine)
-    val countries = CSV.read("src/main/scala/fileReader/CSV/countries.csv", CountryTest.fromCsvLine)
-    val runways = CSV.read("src/main/scala/fileReader/CSV/runways.csv", RunwayTest.fromCsvLine)
 
-    println(s"\nChoose an option: \n\t (1) Query \n\t (2) Reports \n\t (0) Exit")
-    val selection = scala.io.StdIn.readInt()
 
-    selection match {
-      case 0 => exit
 
-      case 1 =>
-        println(s"\n ************* Query ************* \n")
-        println(s"Enter a Country Name or Country Code:")
-        Query.readCountry(airports, countries)
-
-      case 2 =>
-        println(s"\n ************* Reports ************* \n")
-        println(s"\nChoose an option: \n\t (1) 10 countries with highest/lowest number of airports \n\t (2) Type of runways per country \n\t (3) Top 10 most common runway latitude \n\t (0) Return to Menu")
-        Reports.readOption(airports, countries, runways)
-
-      case _ =>
-        println("Input error -> Select only a number between 0 and 2 !")
-    }
-
-    /*
-    val result = countries
-    result.lines.foreach(println)
-    println(result.nbInvalidLine)
-     */
-    main(args: Array[String])
   }
+
 }
