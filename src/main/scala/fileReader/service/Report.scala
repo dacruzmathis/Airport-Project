@@ -1,7 +1,7 @@
 package fileReader.service
 
 import fileReader.model._
-import storingQuering.{Storage , Quering}
+import storing.Storage
 
 import java.io.File
 import java.nio.file.{Files, Path}

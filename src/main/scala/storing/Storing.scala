@@ -1,4 +1,4 @@
-package storingQuering
+package storing
 
 import fileReader.service._
 import fileReader.model._
