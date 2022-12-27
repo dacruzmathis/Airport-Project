@@ -1,6 +1,6 @@
 import fileReader.service.{Quering, Report}
 import storing.Storing
-
+import GUI.GUI
 import scala.sys.exit
 
 object Main {
@@ -12,7 +12,7 @@ object Main {
     val stoAir = Storing.storingAirports()
     val stoRun = Storing.storingRunways()
 
-    GUI.GUI.menu(stoAir, stoCountries, stoRun)
+    GUI.menu(stoAir, stoCountries, stoRun)
 
     main(args: Array[String])
   }
