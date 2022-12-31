@@ -16,8 +16,8 @@ import scala.util.Try
 
 object Report {
 
-  def readOption(airports: Storage[Airport], countries: Storage[Country], runways: Storage[Runway]) = {
-    val reportSelection = scala.io.StdIn.readInt()
+  def readOption(airports: Storage[Airport], countries: Storage[Country], runways: Storage[Runway], reportSelection: Int) = {
+    //val reportSelection = scala.io.StdIn.readInt()
     reportSelection match {
       case 1 => topTenCountriesByNumberOfAirport(airports, countries)
       case 2 => runwayTypePerCountry(airports,countries,runways)
@@ -42,15 +42,8 @@ object Report {
       .take(10)
       .map(info => countryFullNameByCountryCode(countries, info._1) + ": " + info._2 + " airports")
 
-    println("Highest number of airports:")
-    println("")
-    top10H.foreach(println)
-    println("")
-    println("______________________________")
-    println("")
-    println("Lowest number of airports:")
-    println("")
-    top10L.foreach(println)
+    val res = "\nHighest number of airports:" + "\n" + top10H + "\n" + "______________________________" + "\n" + "Lowest number of airports:" + "\n" + top10L
+    res
   }
 
   def countryFullNameByCountryCode(countries : Storage[Country] , code : String) = {
@@ -58,16 +51,15 @@ object Report {
   }
 
   def runwayTypePerCountry(airports: Storage[Airport], countries: Storage[Country] , runways : Storage[Runway]) = {
-    println("Type of runways per country:")
-    println("")
-    airports.storage
+    "Type of runways per country:" +
+      airports.storage
       .map(a => (a , Quering.getRunwaysByAirportId(a.id ,runways)))
       .groupBy(tuple => tuple._1.countryCode)
       .map(x => (countryFullNameByCountryCode(countries ,x._1), x._2.map(x => x._2.map(r => r.surface)).flatten.distinct))
       .toList
       .sortBy(tuple => tuple._1)(Ordering[String])
       .map(x => x._1 + ": " + ppTypeRun(x._2.sortBy(r => r)(Ordering[String])))
-      .foreach(println)
+      .toString()
   }
 
   def ppTypeRun(l : List[String]) : String = l match {
@@ -77,8 +69,7 @@ object Report {
   }
 
   def topTenMostCommunRunwayLatitude(runways : Storage[Runway]) = {
-    println("1O Most Common Runway by Latitude :")
-    println("")
+    "1O Most Common Runway by Latitude :" +
     runways
       .storage
       .groupBy(r => r.leId)
@@ -87,7 +78,7 @@ object Report {
       .sortBy(info => info._2)(Ordering[Int].reverse)
       .take(10)
       .map(info => "Latitude: " + info._1 + " , Count of runways : " + info._2)
-      .foreach(println)
+      .toString()
   }
 /*
   def test(airports: Storage[Airport], countries: Storage[Country]) = {
