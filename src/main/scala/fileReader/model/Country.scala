@@ -2,8 +2,6 @@ package fileReader.model
 
 import scala.util.Try
 
-
-
 final case class Country(code : String , name : String , continent : String , link : String)
 
 

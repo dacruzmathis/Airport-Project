@@ -10,7 +10,6 @@ object Airport {
   def fromCsvLine(line : Array[String]) : Option[Airport] = {
     line.size match {
       case _ => parseAirport((line))
-      //case _ => None
     }
   }
 
@@ -22,7 +21,6 @@ object Airport {
         case (Some(id),Some(typeOf), Some(name), Some(countryCode)) => if (name.contains("[Duplicate]")) None else Some(Airport(id, typeOf.substring(1, typeOf.length - 1), name.substring(1, name.length - 1), countryCode.substring(1, countryCode.length - 1)))
         case _ => None
       }
-
     }
   }
 

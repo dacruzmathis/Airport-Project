@@ -14,22 +14,6 @@ object Runway {
   }
 
 
-  /*
-  def parseRunway(line: Array[String]) = {
-    line(5).length match {
-      case 1 => None
-      case 0 => None
-      case _ => (Try(line(1)).toOption, Try(line(2)).toOption, Try(line(5)).toOption, Try(line(3)).toOption, Try(line(4)).toOption) match {
-        case (Some(airRef), Some(airId), Some(surface), Some(len), Some(wid)) => Some(Runway(airRef, airId.substring(1, airId.length - 1), surface.substring(1, surface.length - 1), len, wid))
-        case _ => None
-      }
-    }
-  }
-  */
-
-
-
-
   def parseRunway(line: Array[String]) = {
     line(5).length match {
       case 1 => None
@@ -52,8 +36,5 @@ object Runway {
       }
     }
   }
-
-
-
 
 }
