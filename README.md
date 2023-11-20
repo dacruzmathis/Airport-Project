@@ -1,4 +1,4 @@
-# ScalaProjet
+# Airport Project
 
 The project consist to make a parsing for 3 CSV files.  
 The files contain data for countries, airports and runway information.  
